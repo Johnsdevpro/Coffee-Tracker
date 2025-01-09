@@ -6,6 +6,7 @@ import {
   coffeeConsumptionHistory,
   statusLevels,
 } from "@/lib/utils";
+import { Table, TableHead, TableHeader, TableRow } from "./ui/table";
 
 function StatCard(props) {
   const { lg, title, children } = props;
@@ -97,11 +98,28 @@ const Stats = () => {
           <StatCard title="Total Cost ($)">
             <p className="text-slate-500 text-sm">
               $
-              <span className="ext-base font-bold md:text-xl text-slate-500">
+              <span className="ext-base font-bold md:text-lg text-slate-500">
                 {stats.total_cost}
               </span>
             </p>
           </StatCard>
+        </div>
+        <div className="flex flex-col mt-3">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                  Coffe Name
+                </TableHead>
+                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                  Number of Purchase
+                </TableHead>
+                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                  Percentage of Total
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+          </Table>
         </div>
       </div>
     </>

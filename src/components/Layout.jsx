@@ -5,7 +5,7 @@ const Layout = (props) => {
   const { children } = props;
 
   const header = (
-    <header className="w-full border-b-2 border-b-slate-300 h-[50px] md:h-[60px] bg-white">
+    <header className="w-full border-b-2 border-b-slate-300 h-[50px] md:h-[60px] bg-white backdrop-blur-sm">
       <div className="flex flex-row w-full max-w-7xl justify-between items-center gap-4 mx-auto h-full px-3">
         <a href="/">
           <p className="font-extrabold text-lg md:text-xl bg-gradient-to-r from-orange-400 to-orange-500 bg-clip-text text-transparent">
@@ -47,7 +47,7 @@ const Layout = (props) => {
   return (
     <>
       {header}
-      <main className="flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 overflow-auto h-dvh">
+      <main className="flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 overflow-hidden h-dvh">
         {children}
       </main>
       {footer}
