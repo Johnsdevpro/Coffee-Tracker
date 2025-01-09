@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        dmsans: ["DM Sans", "serif"],
+        roboto: ["Roboto", "serif"],
       },
       borderRadius: {
         lg: "var(--radius)",

@@ -6,9 +6,9 @@ const CoffeeForm = () => {
   return (
     <>
       <div>
-        <div className="flex flex-row gap-2 items-center">
+        <div className="flex flex-row gap-2 items-center mt-3">
           <Pencil className="text-slate-600 text-xs md:text-sm xl:text-xl" />
-          <h2 className="font-bold text-slate-600 mt-2 text-sm md:text-xl xl:text-2xl">
+          <h2 className="font-bold text-slate-600 text-sm md:text-xl xl:text-2xl">
             Sart Tracking Now
           </h2>
         </div>
