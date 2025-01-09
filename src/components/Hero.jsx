@@ -9,7 +9,7 @@ const Hero = () => {
             Coffe Tacker: From <span className="text-orange-500">Bean </span>to
             <span className="text-orange-500"> Boost</span>
           </h1>
-          <p className="text-slate-500 text-xs font-medium md:text-sm lg:text-base line-clamp-3 ">
+          <p className="text-slate-500 font-medium text-sm lg:text-base line-clamp-3 ">
             Track your coffee journey like never before. Whether it’s your first
             cup of the day or a late-night pick-me-up, we’re here to help you
             redefine your connection with caffeine and savor every moment.

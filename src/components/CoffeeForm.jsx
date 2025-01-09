@@ -1,6 +1,7 @@
 import { coffeeOptions } from "@/lib/utils";
 import { Pencil } from "lucide-react";
 import { Button } from "./ui/button";
+import { Select, SelectTrigger } from "./ui/select";
 
 const CoffeeForm = () => {
   return (
@@ -42,7 +43,10 @@ const CoffeeForm = () => {
           </Button>
         </div>
         <div>
-          <select name="" id=""></select>
+          <Select>
+            <SelectTrigger
+
+          </Select>
         </div>
       </div>
     </>
