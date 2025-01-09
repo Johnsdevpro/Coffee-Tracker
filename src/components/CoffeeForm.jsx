@@ -12,7 +12,15 @@ import { useState } from "react";
 import { Input } from "./ui/input";
 
 const CoffeeForm = () => {
-  const [selectedCoffee, setSelectedCoffe] = useState("");
+  const [showSelectCoffeeType, setShowSelectCoffeeType] = useState(false);
+  const [selectedCoffee, setSelectedCoffee] = useState(null);
+  const [coffeeCost, setCoffeeCost] = useState(0);
+  const [hour, setHour] = useState(0);
+  const [min, setMin] = useState(0);
+
+  const handleSubmitForm = () => {
+    console.log(selectedCoffee, coffeeCost, hour, min);
+  };
   return (
     <>
       <div>
@@ -30,9 +38,17 @@ const CoffeeForm = () => {
           {coffeeOptions.slice(0, 7).map((coffeOption, coffeOptionIndex) => {
             return (
               <Button
+                onClick={() => {
+                  setSelectedCoffee(coffeOption.name.toLowerCase());
+                  setShowSelectCoffeeType(false);
+                }}
                 key={coffeOptionIndex}
-                variant="outline"
-                className="flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit"
+                className={
+                  "flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit border border-slate-200 hover:bg-slate-200 " +
+                  (coffeOption.name === selectedCoffee
+                    ? "bg-slate-200 border-slate-300"
+                    : "bg-white")
+                }
               >
                 <p className="text-slate-600 font-bold capitalize text-sm">
                   {coffeOption.name}
@@ -44,38 +60,57 @@ const CoffeeForm = () => {
             );
           })}
           <Button
+            onClick={() => {
+              setShowSelectCoffeeType(true);
+              setSelectedCoffee(null);
+            }}
             variant="outline"
-            className="flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit"
+            className={
+              "flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit border border-slate-200 hover:bg-slate-200 " +
+              (showSelectCoffeeType
+                ? "bg-slate-200 border-slate-300"
+                : "bg-white")
+            }
           >
             <p className="text-slate-600 font-bold capitalize text-sm">Other</p>
             <p className="text-xs md:text-sm font-medium text-slate-500">n/a</p>
           </Button>
         </div>
         <div className="mt-3">
-          <Select onValueChange={setSelectedCoffe} value={selectedCoffee}>
-            <SelectTrigger>
-              <SelectValue placeholder="Select a coffee Type" />
-            </SelectTrigger>
+          {showSelectCoffeeType && (
+            <Select
+              onValueChange={setSelectedCoffee}
+              value={selectedCoffee}
+              id="coffee-list"
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select a coffee Type" />
+              </SelectTrigger>
 
-            <SelectContent>
-              {coffeeOptions.map((coffeeOption, coffeeOptionIndex) => {
-                return (
-                  <SelectItem
-                    key={coffeeOptionIndex}
-                    value={coffeeOption.name.toLowerCase()}
-                  >
-                    {coffeeOption.name} ({coffeeOption.caffeine}mg)
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
+              <SelectContent>
+                {coffeeOptions.map((coffeeOption, coffeeOptionIndex) => {
+                  return (
+                    <SelectItem
+                      key={coffeeOptionIndex}
+                      value={coffeeOption.name.toLowerCase()}
+                    >
+                      {coffeeOption.name} ({coffeeOption.caffeine}mg)
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          )}
         </div>
-        <div className="flex flex-col mt-3">
+        <div className="flex flex-col mt-3 mb-3">
           <h4 className="text-slate-600 font-medium text-xs md:text-lg">
             Add the cost
           </h4>
           <Input
+            value={coffeeCost}
+            onChange={(e) => {
+              setCoffeeCost(e.target.value);
+            }}
             type="number"
             placeholder="E.g. 4.56"
             className="mt-1"
@@ -87,7 +122,7 @@ const CoffeeForm = () => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <h6 className="text-sm text-slate-500 font-medium mt-1">Hours</h6>
-              <Select id="hours-select">
+              <Select id="hours-select" onValueChange={setHour} value={hour}>
                 <SelectTrigger>
                   <SelectValue placeholder="Hour" />
                 </SelectTrigger>
@@ -111,7 +146,7 @@ const CoffeeForm = () => {
             </div>
             <div>
               <h6 className="text-sm text-slate-500 font-medium mt-1">Mins</h6>
-              <Select id="mins-select">
+              <Select id="mins-select" onValueChange={setMin} value={min}>
                 <SelectTrigger>
                   <SelectValue placeholder="Min" />
                 </SelectTrigger>
@@ -131,7 +166,7 @@ const CoffeeForm = () => {
               </Select>
             </div>
           </div>
-          <Button className="h-[40px] mt-4">
+          <Button className="h-[40px] mt-4" onClick={handleSubmitForm}>
             <p>Add Entry</p>
           </Button>
         </div>
