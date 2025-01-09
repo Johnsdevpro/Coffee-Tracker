@@ -44,8 +44,7 @@ const CoffeeForm = () => {
         </div>
         <div>
           <Select>
-            <SelectTrigger
-
+            <SelectTrigger></SelectTrigger>
           </Select>
         </div>
       </div>
