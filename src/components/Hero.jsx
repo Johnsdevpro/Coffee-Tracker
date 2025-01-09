@@ -14,7 +14,7 @@ const Hero = () => {
             cup of the day or a late-night pick-me-up, we’re here to help you
             redefine your connection with caffeine and savor every moment.
           </p>
-          <div className="w-full p-2 bg-slate-100 mt-2 rounded-sm">
+          <div className="w-full p-2 bg-slate-100 mt-4 rounded-sm">
             <p className="text-xs md:text-sm text-slate-500 font-medium mt-2">
               Try{" "}
               <span className="font-extrabold bg-gradient-to-r from-orange-500 to-orange-600 text-transparent bg-clip-text">
