@@ -8,7 +8,7 @@ const CoffeeForm = () => {
       <div>
         <div className="flex flex-row gap-2 items-center">
           <Pencil className="text-slate-600 text-xs md:text-sm xl:text-xl" />
-          <h2 className="font-bold text-slate-600 text-lg md:text-xl xl:text-2xl">
+          <h2 className="font-bold text-slate-600 mt-2 text-sm md:text-xl xl:text-2xl">
             Sart Tracking Now
           </h2>
         </div>
@@ -40,6 +40,9 @@ const CoffeeForm = () => {
             <p className="text-slate-600 font-bold capitalize text-sm">Other</p>
             <p className="text-xs md:text-sm font-medium text-slate-500">n/a</p>
           </Button>
+        </div>
+        <div>
+          <select name="" id=""></select>
         </div>
       </div>
     </>
