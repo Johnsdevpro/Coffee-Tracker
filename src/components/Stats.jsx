@@ -108,13 +108,13 @@ const Stats = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                <TableHead className="text-slate-500 font-medium text-sm md:text-lg">
                   Coffe Name
                 </TableHead>
-                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                <TableHead className="text-slate-500 font-medium text-sm md:text-lg">
                   Number of Purchase
                 </TableHead>
-                <TableHead className="text-slate-500 font-medium text-base md:text-lg">
+                <TableHead className="text-slate-500 font-medium text-sm md:text-lg">
                   Percentage of Total
                 </TableHead>
               </TableRow>

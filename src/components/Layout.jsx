@@ -46,11 +46,13 @@ const Layout = (props) => {
 
   return (
     <>
-      {header}
-      <main className="flex flex-col w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 overflow-hidden h-dvh">
-        {children}
-      </main>
-      {footer}
+      <div className="min-h-screen flex flex-col">
+        {header}
+        <main className="flex-1 w-full max-w-7xl mx-auto px-3 sm:px-4 lg:px-5 container overflow-y-auto py-4">
+          {children}
+        </main>
+        {footer}
+      </div>
     </>
   );
 };
