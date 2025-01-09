@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import Stats from "./components/Stats";
 
 const App = () => {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
   const authenticatedContent = (
     <>
       <Stats />
