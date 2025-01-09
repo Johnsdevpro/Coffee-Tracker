@@ -4,9 +4,18 @@ import {
   calculateCoffeeStats,
   calculateCurrentCaffeineLevel,
   coffeeConsumptionHistory,
+  getTopThreeCoffees,
   statusLevels,
 } from "@/lib/utils";
-import { Table, TableHead, TableHeader, TableRow } from "./ui/table";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "./ui/table";
 
 function StatCard(props) {
   const { lg, title, children } = props;
@@ -83,7 +92,7 @@ const Stats = () => {
           <StatCard title="Avg # of Coffees">
             <p className="text-slate-500 text-sm">
               <span className="ext-base font-bold md:text-xl text-slate-500">
-                {stats.average_coffee}
+                {stats.average_coffees}
               </span>
             </p>
           </StatCard>
@@ -104,8 +113,11 @@ const Stats = () => {
             </p>
           </StatCard>
         </div>
-        <div className="flex flex-col mt-3">
+        <div className="flex flex-col mt-3 border-2 border-slate-200  shadow-sm rounded-md">
           <Table>
+            <TableCaption className="text-slate-500 font-medium text-xs md:text-sm">
+              Top 3 of your favorites coffees.
+            </TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="text-slate-500 font-medium text-sm md:text-lg">
@@ -119,6 +131,22 @@ const Stats = () => {
                 </TableHead>
               </TableRow>
             </TableHeader>
+            <TableBody>
+              {getTopThreeCoffees(coffeeConsumptionHistory).map(
+                (topCoffee, topCoffeeIndex) => {
+                  return (
+                    <TableRow
+                      key={topCoffeeIndex}
+                      className="text-slate-500 text-xs md:text-sm lg:text-base "
+                    >
+                      <TableCell>{topCoffee.coffeeName}</TableCell>
+                      <TableCell>{topCoffee.count}</TableCell>
+                      <TableCell>{topCoffee.percentage}</TableCell>
+                    </TableRow>
+                  );
+                }
+              )}
+            </TableBody>
           </Table>
         </div>
       </div>
