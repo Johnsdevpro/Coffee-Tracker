@@ -1,20 +1,46 @@
+import { useState } from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
+import { Separator } from "./ui/separator";
 
 const Authentication = () => {
+  const [isRegistration, setIsRegistration] = useState(false);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [authenticating, setAuthenticating] = useState(false);
+
   return (
     <div>
-      <div>
-        <div className="flex flex-col gap-1">
+      <div className="">
+        {isRegistration && (
+          <div className="flex flex-col gap-1">
+            <Label htmlFor="name" className="text-slate-600 text-xs md:text-sm">
+              Full Name
+            </Label>
+            <Input
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              type="text"
+              placeholder="Enter your full name"
+              id="name"
+              required
+              className="placeholder:text-slate-500 text-xs md:text-sm"
+            />
+          </div>
+        )}
+        <div className="flex flex-col gap-1 mt-3">
           <Label htmlFor="email" className="text-slate-600 text-xs md:text-sm">
             Email
           </Label>
           <Input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             placeholder="Enter your email"
             id="email"
-            required="true"
+            required
             className="placeholder:text-slate-500 text-xs md:text-sm"
           />
         </div>
@@ -26,28 +52,35 @@ const Authentication = () => {
             Password
           </Label>
           <Input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             placeholder="Enter your password"
             id="password"
-            required="true"
+            required
             className="placeholder:text-slate-500 text-xs md:text-sm"
           />
         </div>
         <Button className="mt-3 w-full text-white text-xs md:text-sm font-medium capitalize h-[40px]">
-          Sign In
+          {isRegistration ? "Sign Up" : "Sign In"}
         </Button>
-        <hr />
-        <div className="flex flex-row items-center justify-center gap-3 mt-3">
+        <Separator className="text-slate-500 my-3 h-[2px] rounded" />
+        <div className="flex flex-row items-center justify-center gap-3">
           <p className="text-slate-500 text-xs md:text-sm font-medium">
-            Don&apos;t have an account ?
+            {isRegistration
+              ? "Already have an account ?"
+              : "Don't have an account ?"}
           </p>
           <Button
+            onClick={() => {
+              setIsRegistration(!isRegistration);
+            }}
             variant="ghost"
             className="p-0 text-orange-500 hover:bg-transparent hover:text-orange-600 text-xs md:text-sm font-medium"
           >
-            Sign Up
+            {isRegistration ? "Sign In" : "Sign Up"}
           </Button>
-        </div>
+        </div>{" "}
       </div>
     </div>
   );

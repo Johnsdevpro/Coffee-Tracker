@@ -27,7 +27,8 @@ const CoffeeForm = (props) => {
   const handleSubmitForm = () => {
     if (!isAuthenticated) {
       openDialog({
-        title: "Auth",
+        title: "Authentication",
+        description: "Fill out the form to continue",
         content: <Authentication />,
       });
       return;
@@ -92,7 +93,7 @@ const CoffeeForm = (props) => {
         <div className="mt-3">
           {showSelectCoffeeType && (
             <Select
-              onValueChange={setSelectedCoffee}
+              onValueChange={selectedCoffee}
               value={selectedCoffee}
               id="coffee-list"
             >
