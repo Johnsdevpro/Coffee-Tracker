@@ -53,12 +53,12 @@ const CoffeeForm = (props) => {
             return (
               <Button
                 onClick={() => {
-                  setSelectedCoffee(coffeOption.name.toLowerCase());
+                  setSelectedCoffee(coffeOption.name);
                   setShowSelectCoffeeType(false);
                 }}
                 key={coffeOptionIndex}
                 className={
-                  "flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit border border-slate-200 hover:bg-slate-200 " +
+                  "flex flex-col items-center justify-center gap-2 py-3 px-2 h-fit border border-slate-200 hover:bg-slate-100 " +
                   (coffeOption.name === selectedCoffee
                     ? "bg-slate-200 border-slate-300"
                     : "bg-white")
@@ -93,7 +93,7 @@ const CoffeeForm = (props) => {
         <div className="mt-3">
           {showSelectCoffeeType && (
             <Select
-              onValueChange={selectedCoffee}
+              onValueChange={setSelectedCoffee}
               value={selectedCoffee}
               id="coffee-list"
             >
@@ -106,7 +106,7 @@ const CoffeeForm = (props) => {
                   return (
                     <SelectItem
                       key={coffeeOptionIndex}
-                      value={coffeeOption.name.toLowerCase()}
+                      value={coffeeOption.name}
                     >
                       {coffeeOption.name} ({coffeeOption.caffeine}mg)
                     </SelectItem>
@@ -136,7 +136,7 @@ const CoffeeForm = (props) => {
           <div className="grid grid-cols-2 gap-3">
             <div>
               <h6 className="text-sm text-slate-500 font-medium mt-1">Hours</h6>
-              <Select id="hours-select" onValueChange={setHour} value={hour}>
+              <Select id="hours-select" value={hour} onValueChange={setHour}>
                 <SelectTrigger>
                   <SelectValue placeholder="Hour" />
                 </SelectTrigger>

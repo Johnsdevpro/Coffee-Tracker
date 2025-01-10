@@ -3,13 +3,18 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
+import { Loader } from "lucide-react";
 
 const Authentication = () => {
   const [isRegistration, setIsRegistration] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [authenticating, setAuthenticating] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  async function handleAuthenticate() {
+    setIsAuthenticating(true);
+  }
 
   return (
     <div>
@@ -61,26 +66,34 @@ const Authentication = () => {
             className="placeholder:text-slate-500 text-xs md:text-sm"
           />
         </div>
-        <Button className="mt-3 w-full text-white text-xs md:text-sm font-medium capitalize h-[40px]">
-          {isRegistration ? "Sign Up" : "Sign In"}
-        </Button>
-        <Separator className="text-slate-500 my-3 h-[2px] rounded" />
-        <div className="flex flex-row items-center justify-center gap-3">
-          <p className="text-slate-500 text-xs md:text-sm font-medium">
-            {isRegistration
-              ? "Already have an account ?"
-              : "Don't have an account ?"}
-          </p>
-          <Button
-            onClick={() => {
-              setIsRegistration(!isRegistration);
-            }}
-            variant="ghost"
-            className="p-0 text-orange-500 hover:bg-transparent hover:text-orange-600 text-xs md:text-sm font-medium"
-          >
-            {isRegistration ? "Sign In" : "Sign Up"}
-          </Button>
-        </div>{" "}
+        {isAuthenticating ? (
+          <div className="flex flex-col items-center justify-center mt-3">
+            <Loader className="text-orange-500 text-sm md:text-base animate-spin" />
+          </div>
+        ) : (
+          <div>
+            <Button className="mt-3 w-full text-white text-xs md:text-sm font-medium capitalize h-[40px]">
+              {isRegistration ? "Sign Up" : "Sign In"}
+            </Button>
+            <Separator className="text-slate-500 my-3 h-[2px] rounded" />
+            <div className="flex flex-row items-center justify-center gap-3">
+              <p className="text-slate-500 text-xs md:text-sm font-medium">
+                {isRegistration
+                  ? "Already have an account ?"
+                  : "Don't have an account ?"}
+              </p>
+              <Button
+                onClick={() => {
+                  setIsRegistration(!isRegistration);
+                }}
+                variant="ghost"
+                className="p-0 text-orange-500 hover:bg-transparent hover:text-orange-600 text-xs md:text-sm font-medium"
+              >
+                {isRegistration ? "Sign In" : "Sign Up"}
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
