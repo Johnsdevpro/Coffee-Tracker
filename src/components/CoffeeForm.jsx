@@ -13,9 +13,12 @@ import { Input } from "./ui/input";
 
 import { useDialog } from "./DialogProvider";
 import Authentication from "./Authentication";
+import { useAuth } from "@/context/AuthContext";
 
 const CoffeeForm = (props) => {
+  const { globalUser } = useAuth();
   const { isAuthenticated } = props;
+
   const { openDialog } = useDialog();
 
   const [showSelectCoffeeType, setShowSelectCoffeeType] = useState(false);
@@ -25,7 +28,7 @@ const CoffeeForm = (props) => {
   const [min, setMin] = useState(0);
 
   const handleSubmitForm = () => {
-    if (!isAuthenticated) {
+    if (!globalUser) {
       openDialog({
         title: "Authentication",
         description: "Fill out the form to continue",

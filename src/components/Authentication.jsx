@@ -4,21 +4,57 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { Separator } from "./ui/separator";
 import { Loader } from "lucide-react";
+import { useAuth } from "@/context/AuthContext";
+import { useDialog } from "./DialogProvider";
 
 const Authentication = () => {
+  const { closeDialog } = useDialog();
   const [isRegistration, setIsRegistration] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [error, setError] = useState(null);
+
+  const { signin, signup } = useAuth();
 
   async function handleAuthenticate() {
-    setIsAuthenticating(true);
+    if (
+      !email ||
+      !email.includes("@") ||
+      !password ||
+      password.length < 8 ||
+      isAuthenticating
+    ) {
+      return;
+    }
+
+    try {
+      setIsAuthenticating(true);
+      setError(null);
+
+      if (isRegistration) {
+        //register a suser
+        await signup(email, password, name);
+        closeDialog();
+      } else {
+        //login a user
+        await signin(email, password);
+
+        closeDialog();
+      }
+    } catch (error) {
+      console.log("Failed to create the user", error.message);
+      setError(error.message);
+    } finally {
+      setIsAuthenticating(false);
+    }
   }
 
   return (
     <div>
       <div className="">
+        {error && <p className="text-red-500 text-xs md:text-sm">{error}</p>}
         {isRegistration && (
           <div className="flex flex-col gap-1">
             <Label htmlFor="name" className="text-slate-600 text-xs md:text-sm">
@@ -72,7 +108,10 @@ const Authentication = () => {
           </div>
         ) : (
           <div>
-            <Button className="mt-3 w-full text-white text-xs md:text-sm font-medium capitalize h-[40px]">
+            <Button
+              onClick={handleAuthenticate}
+              className="mt-3 w-full text-white text-xs md:text-sm font-medium capitalize h-[40px]"
+            >
               {isRegistration ? "Sign Up" : "Sign In"}
             </Button>
             <Separator className="text-slate-500 my-3 h-[2px] rounded" />

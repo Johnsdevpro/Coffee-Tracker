@@ -2,10 +2,13 @@ import { ArrowRight, User } from "lucide-react";
 import { Button } from "./ui/button";
 import { useDialog } from "./DialogProvider";
 import Authentication from "./Authentication";
+import { useAuth } from "@/context/AuthContext";
 
 const Layout = (props) => {
   const { children, isAuthenticated } = props;
   const { openDialog } = useDialog();
+
+  const { globalUser, signout } = useAuth();
 
   const handleClick = () => {
     openDialog({
@@ -24,13 +27,13 @@ const Layout = (props) => {
           </p>
         </a>
 
-        {!isAuthenticated ? (
+        {!globalUser ? (
           <Button className="py-1 px-5" onClick={handleClick}>
             <p className="text-xs md:text-sm">Sign Up</p>
             <ArrowRight className="text-white text-xs md:text-sm" />
           </Button>
         ) : (
-          <User className="text-lg text-slate-500" />
+          <User className="text-lg text-slate-500" onClick={signout} />
         )}
       </div>
     </header>
