@@ -1,8 +1,19 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, User } from "lucide-react";
 import { Button } from "./ui/button";
+import { useDialog } from "./DialogProvider";
+import Authentication from "./Authentication";
 
 const Layout = (props) => {
-  const { children } = props;
+  const { children, isAuthenticated } = props;
+  const { openDialog } = useDialog();
+
+  const handleClick = () => {
+    openDialog({
+      title: "Authentication",
+      description: "Fill the form bellow to continue",
+      content: <Authentication />,
+    });
+  };
 
   const header = (
     <header className="w-full border-b-2 border-b-slate-300 h-[50px] md:h-[60px] bg-white backdrop-blur-sm">
@@ -13,12 +24,14 @@ const Layout = (props) => {
           </p>
         </a>
 
-        <Button className="py-1 px-5">
-          <a href="#" className="text-xs md:text-sm">
-            Sign Up
-          </a>
-          <ArrowRight className="text-white text-xs md:text-sm" />
-        </Button>
+        {!isAuthenticated ? (
+          <Button className="py-1 px-5" onClick={handleClick}>
+            <p className="text-xs md:text-sm">Sign Up</p>
+            <ArrowRight className="text-white text-xs md:text-sm" />
+          </Button>
+        ) : (
+          <User className="text-lg text-slate-500" />
+        )}
       </div>
     </header>
   );

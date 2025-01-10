@@ -1,4 +1,16 @@
-import { HistoryIcon } from "lucide-react";
+import {
+  calculateCurrentCaffeineLevel,
+  coffeeConsumptionHistory,
+  getCaffeineAmount,
+  timeSinceConsumption,
+} from "@/lib/utils";
+import { Coffee, HistoryIcon } from "lucide-react";
+import {
+  Tooltip,
+  TooltipProvider,
+  TooltipTrigger,
+  TooltipContent,
+} from "./ui/tooltip";
 
 const History = () => {
   return (
@@ -9,6 +21,41 @@ const History = () => {
           <h2 className="font-bold text-slate-600 text-sm md:text-xl xl:text-2xl">
             History
           </h2>
+        </div>
+        <div>
+          <p className="text-xs md:text-sm text-slate-500 mt-3 font-medium">
+            Hover for more information
+          </p>
+          <div className="w-full flex flex-row flex-wrap gap-3 mt-3">
+            {Object.keys(coffeeConsumptionHistory)
+              .sort((a, b) => b - a)
+              .map((utcTime, coffeeIndex) => {
+                const coffee = coffeeConsumptionHistory[utcTime];
+                const timeSinceConsumed = timeSinceConsumption(utcTime);
+                const originalAmount = getCaffeineAmount(coffee.name);
+                const remainingAmount = calculateCurrentCaffeineLevel({
+                  [utcTime]: coffee,
+                });
+
+                const summary = `${coffee.name} | ${timeSinceConsumed} | $${coffee.cost} | ${remainingAmount}mg / ${originalAmount}mg`;
+                return (
+                  <div key={coffeeIndex}>
+                    <TooltipProvider>
+                      <Tooltip>
+                        <TooltipTrigger>
+                          <Coffee className="text-slate-500" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          <p className="text-sm md:text-base text-white font-medium py-1 px-4">
+                            {summary}
+                          </p>
+                        </TooltipContent>
+                      </Tooltip>
+                    </TooltipProvider>
+                  </div>
+                );
+              })}
+          </div>
         </div>
       </div>
     </>

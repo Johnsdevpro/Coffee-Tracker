@@ -76,7 +76,7 @@ const Stats = () => {
                   Low
                 </h5>
               </div>
-              <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-2">
+              <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-3">
                 {statusLevels[warningLevel].description}
               </p>
             </div>

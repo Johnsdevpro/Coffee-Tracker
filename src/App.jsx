@@ -1,11 +1,12 @@
 import CoffeeForm from "./components/CoffeeForm";
+import { DialogProvider } from "./components/DialogProvider";
 import Hero from "./components/Hero";
 import History from "./components/History";
 import Layout from "./components/Layout";
 import Stats from "./components/Stats";
 
 const App = () => {
-  const isAuthenticated = true;
+  const isAuthenticated = false;
   const authenticatedContent = (
     <>
       <Stats />
@@ -15,11 +16,13 @@ const App = () => {
 
   return (
     <>
-      <Layout>
-        <Hero />
-        <CoffeeForm />
-        {isAuthenticated && authenticatedContent}
-      </Layout>
+      <DialogProvider>
+        <Layout isAuthenticated={isAuthenticated}>
+          <Hero />
+          <CoffeeForm isAuthenticated={isAuthenticated} />
+          {isAuthenticated && authenticatedContent}
+        </Layout>
+      </DialogProvider>
     </>
   );
 };

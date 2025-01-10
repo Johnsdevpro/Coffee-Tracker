@@ -11,7 +11,13 @@ import {
 import { useState } from "react";
 import { Input } from "./ui/input";
 
-const CoffeeForm = () => {
+import { useDialog } from "./DialogProvider";
+import Authentication from "./Authentication";
+
+const CoffeeForm = (props) => {
+  const { isAuthenticated } = props;
+  const { openDialog } = useDialog();
+
   const [showSelectCoffeeType, setShowSelectCoffeeType] = useState(false);
   const [selectedCoffee, setSelectedCoffee] = useState(null);
   const [coffeeCost, setCoffeeCost] = useState(0);
@@ -19,6 +25,13 @@ const CoffeeForm = () => {
   const [min, setMin] = useState(0);
 
   const handleSubmitForm = () => {
+    if (!isAuthenticated) {
+      openDialog({
+        title: "Auth",
+        content: <Authentication />,
+      });
+      return;
+    }
     console.log(selectedCoffee, coffeeCost, hour, min);
   };
   return (
