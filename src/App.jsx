@@ -4,8 +4,10 @@ import Hero from "./components/Hero";
 import History from "./components/History";
 import Layout from "./components/Layout";
 import Stats from "./components/Stats";
+import { useAuth } from "./context/AuthContext";
 
 const App = () => {
+  const { globalUser, globalData } = useAuth();
   const isAuthenticated = false;
   const authenticatedContent = (
     <>
@@ -20,7 +22,7 @@ const App = () => {
         <Layout isAuthenticated={isAuthenticated}>
           <Hero />
           <CoffeeForm isAuthenticated={isAuthenticated} />
-          {isAuthenticated && authenticatedContent}
+          {globalUser && authenticatedContent}
         </Layout>
       </DialogProvider>
     </>
