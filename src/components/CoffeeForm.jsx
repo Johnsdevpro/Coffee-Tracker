@@ -14,9 +14,11 @@ import { Input } from "./ui/input";
 import { useDialog } from "./DialogProvider";
 import Authentication from "./Authentication";
 import { useAuth } from "@/context/AuthContext";
+import { doc, setDoc } from "firebase/firestore";
+import { db } from "../../firebase";
 
 const CoffeeForm = (props) => {
-  const { globalUser } = useAuth();
+  const { globalData, globalUser, setGlobalData } = useAuth();
   const { isAuthenticated } = props;
 
   const { openDialog } = useDialog();
@@ -27,8 +29,8 @@ const CoffeeForm = (props) => {
   const [hour, setHour] = useState(0);
   const [min, setMin] = useState(0);
 
-  const handleSubmitForm = () => {
-    if (!globalUser) {
+  async function handleSubmitForm() {
+    if (!isAuthenticated) {
       openDialog({
         title: "Authentication",
         description: "Fill out the form to continue",
@@ -36,8 +38,45 @@ const CoffeeForm = (props) => {
       });
       return;
     }
-    console.log(selectedCoffee, coffeeCost, hour, min);
-  };
+
+    if (!selectedCoffee) {
+      return;
+    }
+
+    try {
+      const newGlobalData = {
+        ...(globalData || {}),
+      };
+
+      const nowTime = Date.now();
+      const timeToSubstract = hour * 60 * 60 * 1000 + min * 60 * 1000;
+      const timestamp = nowTime - timeToSubstract;
+
+      const newData = { name: selectedCoffee, cost: coffeeCost };
+
+      newGlobalData[timestamp] = newData;
+      console.log(timestamp, selectedCoffee, coffeeCost);
+
+      setGlobalData(newGlobalData);
+
+      const userRef = doc(db, "users", globalUser.uid);
+
+      const res = await setDoc(
+        userRef,
+        {
+          [timestamp]: newData,
+        },
+        { merge: true }
+      );
+
+      setSelectedCoffee(null);
+      setCoffeeCost(0);
+      setHour(0);
+      setMin(0);
+    } catch (error) {
+      console.log("Failed to save to db", error.message);
+    }
+  }
   return (
     <>
       <div>

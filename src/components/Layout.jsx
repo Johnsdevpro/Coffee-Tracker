@@ -8,7 +8,7 @@ const Layout = (props) => {
   const { children, isAuthenticated } = props;
   const { openDialog } = useDialog();
 
-  const { globalUser, signout } = useAuth();
+  const { signout } = useAuth();
 
   const handleClick = () => {
     openDialog({
@@ -27,13 +27,16 @@ const Layout = (props) => {
           </p>
         </a>
 
-        {!globalUser ? (
+        {!isAuthenticated ? (
           <Button className="py-1 px-5" onClick={handleClick}>
             <p className="text-xs md:text-sm">Sign Up</p>
             <ArrowRight className="text-white text-xs md:text-sm" />
           </Button>
         ) : (
-          <User className="text-lg text-slate-500" onClick={signout} />
+          <User
+            className="text-lg text-slate-500 cursor-pointer"
+            onClick={signout}
+          />
         )}
       </div>
     </header>
@@ -52,8 +55,8 @@ const Layout = (props) => {
         </span>
         <p className="text-white text-[10px] sm:text-xs">
           Made by{" "}
-          <span>
-            <a href="">John</a>
+          <span className="text-orange-500">
+            <a href="https://github.com/Johnsdevpro">John B.</a>
           </span>
         </p>
       </div>

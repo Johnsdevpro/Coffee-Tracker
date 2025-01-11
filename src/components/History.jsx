@@ -1,6 +1,5 @@
 import {
   calculateCurrentCaffeineLevel,
-  coffeeConsumptionHistory,
   getCaffeineAmount,
   timeSinceConsumption,
 } from "@/lib/utils";
@@ -11,8 +10,10 @@ import {
   TooltipTrigger,
   TooltipContent,
 } from "./ui/tooltip";
+import { useAuth } from "@/context/AuthContext";
 
 const History = () => {
+  const { globalData } = useAuth();
   return (
     <>
       <div>
@@ -27,10 +28,10 @@ const History = () => {
             Hover for more information
           </p>
           <div className="w-full flex flex-row flex-wrap gap-3 mt-3">
-            {Object.keys(coffeeConsumptionHistory)
+            {Object.keys(globalData)
               .sort((a, b) => b - a)
               .map((utcTime, coffeeIndex) => {
-                const coffee = coffeeConsumptionHistory[utcTime];
+                const coffee = globalData[utcTime];
                 const timeSinceConsumed = timeSinceConsumption(utcTime);
                 const originalAmount = getCaffeineAmount(coffee.name);
                 const remainingAmount = calculateCurrentCaffeineLevel({
@@ -46,7 +47,7 @@ const History = () => {
                           <Coffee className="text-slate-500" />
                         </TooltipTrigger>
                         <TooltipContent>
-                          <p className="text-sm md:text-base text-white font-medium py-1 px-4">
+                          <p className="text-xs md:text-sm text-white font-medium p-1">
                             {summary}
                           </p>
                         </TooltipContent>

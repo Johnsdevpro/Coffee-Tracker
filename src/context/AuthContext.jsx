@@ -47,7 +47,6 @@ export function AuthProvider(props) {
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, async (user) => {
-      console.log(" Current user:", user);
       setGlobalUser(user);
       if (!user) {
         console.log("No active user");
@@ -63,7 +62,6 @@ export function AuthProvider(props) {
         let firebaseData = {};
 
         if (docSnap.exists()) {
-          console.log("found user data");
           firebaseData = docSnap.data();
         } else {
           console.log("User document does not exist.");

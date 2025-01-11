@@ -3,7 +3,6 @@ import { PieChart } from "lucide-react";
 import {
   calculateCoffeeStats,
   calculateCurrentCaffeineLevel,
-  coffeeConsumptionHistory,
   getTopThreeCoffees,
   statusLevels,
 } from "@/lib/utils";
@@ -16,6 +15,7 @@ import {
   TableHeader,
   TableRow,
 } from "./ui/table";
+import { useAuth } from "@/context/AuthContext";
 
 function StatCard(props) {
   const { lg, title, children } = props;
@@ -34,9 +34,10 @@ function StatCard(props) {
 }
 
 const Stats = () => {
-  const stats = calculateCoffeeStats(coffeeConsumptionHistory);
+  const { globalData } = useAuth();
+  const stats = calculateCoffeeStats(globalData);
 
-  const caffeineLevel = calculateCurrentCaffeineLevel(coffeeConsumptionHistory);
+  const caffeineLevel = calculateCurrentCaffeineLevel(globalData);
   const warningLevel =
     caffeineLevel < statusLevels["low"].maxLevel
       ? "low"
@@ -73,7 +74,7 @@ const Stats = () => {
                     borderRadius: 6,
                   }}
                 >
-                  Low
+                  {warningLevel}
                 </h5>
               </div>
               <p className="text-xs sm:text-sm md:text-base text-slate-500 mt-3">
@@ -132,7 +133,7 @@ const Stats = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {getTopThreeCoffees(coffeeConsumptionHistory).map(
+              {getTopThreeCoffees(globalData).map(
                 (topCoffee, topCoffeeIndex) => {
                   return (
                     <TableRow
